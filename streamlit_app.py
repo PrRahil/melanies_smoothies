@@ -30,6 +30,12 @@ if ingredients_list:
 
     for fruit_chosen in ingredients_list:
         ingredients_string += fruit_chosen + ' '
+        #heres new section with smoothiefroot, api integration, and snowflake data
+        smoothiefroot_response = requests.get(f"https://my.smoothiefroot.com/api/fruit/{fruit_chosen}")
+        #st.text(smoothiefroot_response.json())
+
+        #smoothie froot dataframe
+        sf_df = st.dataframe(data=smoothiefroot_response.json(), use_container_width = True)
 
     #st.write(ingredients_string)
 
@@ -43,10 +49,3 @@ if ingredients_list:
         session.sql(my_insert_stmt).collect()
         
         st.success(f'Your Smoothie is ordered, {name_on_order}!', icon='✅')
-
-#heres new section with smoothiefroot, api integration, and snowflake data
-smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/watermelon")
-#st.text(smoothiefroot_response.json())
-
-#smoothie froot dataframe
-sf_df = st.dataframe(data=smoothiefroot_response.json(), use_container_width = True)
